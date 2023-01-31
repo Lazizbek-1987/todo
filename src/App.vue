@@ -385,6 +385,7 @@ export default {
             } else {
                 this.toDoList.map(el => el.checked = false)
             }
+            this.filterToDoList()
         },
         removeChecked() {
             this.toDoList = this.toDoList.filter(el => el.checked === false)
