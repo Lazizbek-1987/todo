@@ -330,7 +330,7 @@ export default {
 
             accepted: true,
             notAccepted: false,
-            allToDoList: [],
+            allToDoList: null,
             acceptedToDo: [],
             notAcceptedToDo: [],
             tabActive: null,
@@ -410,6 +410,8 @@ export default {
                 this.acceptedToDo = this.toDoList.filter(el => el.checked === true)
             } else if (item === false) {
                 this.notAcceptedToDo = this.toDoList.filter(el => el.checked === false)
+            } else {
+                return this.toDoList
             }
         },
         searchList() {
