@@ -5,7 +5,8 @@
             md:py-12 my-6 md:my-12 md:mx-auto">
 
             <div class="col-span-1 space-y-3">
-                <h1 class="text-3xl md:text-4xl font-extrabold text-blue-800 text-center mb-5 md:mb-10 shadow-md py-2">{{ theme }}</h1>
+                <h1 class="text-3xl md:text-4xl font-extrabold text-blue-800 text-center mb-5 md:mb-10 shadow-md py-2">
+                    {{ theme }}</h1>
                 <div v-if="toDoList.length" class="w-full relative items-center">
                     <input
                         type="text"
@@ -223,7 +224,8 @@
                         </label>
                     </div>
                     <div v-if="toDoList.some(el => el.checked === true)" class="flex space-x-2 items-center">
-                        <TrashIcon class="w-4 h-4 md:w-6 md:h-6 -ml-2 cursor-pointer text-red-400 hover:text-red-600 duration-500"/>
+                        <TrashIcon
+                            class="w-4 h-4 md:w-6 md:h-6 -ml-2 cursor-pointer text-red-400 hover:text-red-600 duration-500"/>
                         <div>
                             <span @click="removeChecked"
                                   class="cursor-pointer font-semibold md:text-lg text-red-400 hover:text-red-600 duration-500"
@@ -328,7 +330,7 @@ export default {
 
             accepted: true,
             notAccepted: false,
-            allToDoList: null,
+            allToDoList: [],
             acceptedToDo: [],
             notAcceptedToDo: [],
             tabActive: null,
@@ -350,6 +352,15 @@ export default {
                     checked: this.checked
                 })
                 this.value = ''
+
+                let data = JSON.stringify(this.toDoList)
+                localStorage.setItem('todoList', data)
+                this.render()
+            }
+        },
+        render() {
+            if (JSON.parse(localStorage.getItem('todoList'))) {
+                this.toDoList = JSON.parse(localStorage.getItem('todoList'))
             }
         },
         editTask(item) {
@@ -385,7 +396,7 @@ export default {
             } else {
                 this.toDoList.map(el => el.checked = false)
             }
-            this.filterToDoList()
+            // this.filterToDoList()
         },
         removeChecked() {
             this.toDoList = this.toDoList.filter(el => el.checked === false)
@@ -407,6 +418,7 @@ export default {
     },
     mounted() {
         this.idCreater = this.toDoList.length + 1
+        this.render()
     }
 }
 </script>
